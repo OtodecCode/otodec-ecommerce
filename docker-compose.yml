@@ -1,0 +1,21 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: "https://your-project.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "your-anon-key"
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: "postgres://postgres:password@supabase-db:5432/postgres"
+    depends_on:
+      - supabase-db
+  supabase-db:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: password
